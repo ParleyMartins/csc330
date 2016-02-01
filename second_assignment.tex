@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage{amssymb}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\begin{document}
+2.1 - a) 
+	\begin{equation}
+		jobs \leftarrow employee \bowtie works 
+	\end{equation}
+	\begin{equation}
+		\Pi_{person\_name} (\sigma_{company_name = "Small\ Bank\ Corporation"})
+	\end{equation}
+
+2.5 - a)
+	\begin{equation}
+		\Pi_{person\_name} (\sigma_{company_name = "First\ Bank\ Corporation"})
+	\end{equation}
+
+	c)
+	\begin{equation}
+		jobs \leftarrow employee \bowtie works 
+	\end{equation}
+	\begin{equation}
+		\sigma_{company\_name = "First\ Bank\ Corporation", salary > 10,000}(jobs)
+	\end{equation}
+
+2.6 - \begin{equation}
+		\Pi_{customer\_name, customer\_city}(borrower \bowtie customer)
+	\end{equation}
+
+a) Jackson does not appear in the results because he is not in the customer relation (as seen in 
+Figure 2.4). When we include the attribute \textit{city} in our projection, we remove Jackson from our results. \\
+
+b) I would make the attribute \textit{customer\_name} in the borrower relation a foreign key, forcing any borrower to be a bank customer. \\
+
+c)\begin{equation}
+		\Pi_{customer\_name, customer\_city}(borrower \leftouterjoin customer)
+	\end{equation}
+
+
+2.8 a)
+	\begin{equation}
+		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (account))
+	\end{equation}
+
+	b)
+	\begin{equation}
+		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (account))
+	\end{equation}
+
+
+
+\end{document}
