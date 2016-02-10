@@ -1,5 +1,6 @@
-\documentclass{article}
+\documentclass{book}
 \usepackage{amssymb}
+\usepackage{amsmath}
 
 \def\ojoin{\setbox0=\hbox{$\bowtie$}%
   \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
@@ -8,25 +9,28 @@
 \def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
 
 \begin{document}
-2.1 - a) 
+Parley Pacheco Martins 1484000 - Assignment 2 \\
+
+2.1 - c) 
 	\begin{equation}
-		jobs \leftarrow employee \bowtie works 
-	\end{equation}
-	\begin{equation}
-		\Pi_{person\_name} (\sigma_{company_name = "Small\ Bank\ Corporation"})
+	\begin{split}
+		sbc\_employees \leftarrow \sigma_{company\_name = "Small\ Bank\ Corporation"} (works)\\
+		\Pi_{person\_name} (\sigma_{works.salary > sbc\_employees.salary}(works \bowtie sbc\_emplyees))
+	\end{split}
 	\end{equation}
 
 2.5 - a)
 	\begin{equation}
-		\Pi_{person\_name} (\sigma_{company_name = "First\ Bank\ Corporation"})
+		\Pi_{person\_name} (\sigma_{company\_name = "First\ Bank\ Corporation"})
 	\end{equation}
 
 	c)
 	\begin{equation}
-		jobs \leftarrow employee \bowtie works 
-	\end{equation}
-	\begin{equation}
-		\sigma_{company\_name = "First\ Bank\ Corporation", salary > 10,000}(jobs)
+	\begin{split}
+		jobs \leftarrow employee \bowtie works \\
+		fbc \leftarrow \sigma_{company\_name = "First\ Bank\ Corporation", salary > 10,000}(jobs) \\
+		\Pi_{person\_name, street, city} (fbc)
+	\end{split}
 	\end{equation}
 
 2.6 - \begin{equation}
@@ -40,19 +44,33 @@ b) I would make the attribute \textit{customer\_name} in the borrower relation a
 
 c)\begin{equation}
 		\Pi_{customer\_name, customer\_city}(borrower \leftouterjoin customer)
-	\end{equation}
+	\end{equation} 
 
 
 2.8 a)
 	\begin{equation}
-		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (account))
+		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (depositor))
 	\end{equation}
 
-	b)
+
+5.6 a)
 	\begin{equation}
-		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (account))
+	\begin{split}
+		\{t\ |\ \exists\ s \in works(t[person\_name] = s[person\_name]\ \wedge \\
+		 s[company\_name] = "First\ Bank\ Corporation"\}
+	\end{split}
 	\end{equation}
 
+	c)
+	\begin{equation}
+	\begin{split}
+		\{t\ |\ \exists\ s \in works(t[person\_name] = s[person\_name]\ \wedge \\
+		 s[company\_name] = "First\ Bank\ Corporation"\ \wedge \\
+		 s[salary] > 10,000)\ \wedge \\
+		  \exists\ u \in employee(u[person\_name] = s[person\_name]\ \wedge \\
+		   t[street] = u[street] \wedge t[city] = u[city])\}
+	\end{split}
+	\end{equation}
 
 
 \end{document}
