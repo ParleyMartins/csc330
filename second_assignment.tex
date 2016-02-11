@@ -99,7 +99,13 @@ WHERE p.profId = t.profId and t.courseId = r.courseId and t.sectId = r.sectId an
 GROUP BY p.profName \\
 HAVING count(r.studentId) \textgreater \ 3; \\
 
-e)
+e)SELECT s.studentId, s.stuName \\
+FROM student AS s \\
+WHERE 2 \textless \ all(select grade from register AS r, offering AS o \\
+where s.studentId = r.studentId \\
+and r.courseId = o.courseId and r.sectId = o.sectId and o.term = "Fall") \\
+GROUP BY s.studentId, s.stuName \\
+ORDER BY s.stuName; \\
 
 f)
 SELECT DISTINCT p.profName \\
