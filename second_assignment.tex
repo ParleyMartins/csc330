@@ -1,4 +1,4 @@
-\documentclass{book}
+\documentclass{article}
 \usepackage{amssymb}
 \usepackage{amsmath}
 
@@ -11,7 +11,7 @@
 \begin{document}
 Parley Pacheco Martins 1484000 - Assignment 2 \\
 
-2.1 - c) 
+1 - c) 
 	\begin{equation}
 	\begin{split}
 		sbc\_employees \leftarrow \sigma_{company\_name = "Small\ Bank\ Corporation"} (works)\\
@@ -19,7 +19,7 @@ Parley Pacheco Martins 1484000 - Assignment 2 \\
 	\end{split}
 	\end{equation}
 
-2.5 - a)
+2 - a)
 	\begin{equation}
 		\Pi_{person\_name} (\sigma_{company\_name = "First\ Bank\ Corporation"})
 	\end{equation}
@@ -33,7 +33,7 @@ Parley Pacheco Martins 1484000 - Assignment 2 \\
 	\end{split}
 	\end{equation}
 
-2.6 - \begin{equation}
+3 - \begin{equation}
 		\Pi_{customer\_name, customer\_city}(borrower \bowtie customer)
 	\end{equation}
 
@@ -47,13 +47,13 @@ c)\begin{equation}
 	\end{equation} 
 
 
-2.8 a)
+4 a)
 	\begin{equation}
 		\Pi_{account\_number} (G_{\textbf{count}(account\_number) > 1} (depositor))
 	\end{equation}
 
 
-5.6 a)
+5 a)
 	\begin{equation}
 	\begin{split}
 		\{t\ |\ \exists\ s \in works(t[person\_name] = s[person\_name]\ \wedge \\
@@ -71,6 +71,60 @@ c)\begin{equation}
 		   t[street] = u[street] \wedge t[city] = u[city])\}
 	\end{split}
 	\end{equation}
+
+6 - \\
+a)
+SELECT s.stuName, s.program, r.courseId \\
+FROM student AS s, register AS r \\
+WHERE s.studentId = r.studentid and courseId like "CSC*" \\
+ORDER BY s.stuName, r.courseId DESC; \\
+
+b)
+SELECT DISTINCT s.studentId, s.stuName \\
+FROM student AS s, studentArea AS a, register AS r, offering AS o \\
+WHERE a.depth = "major" and a.area="CSC" and s.studentId = a.studentId and r.studentId = s.studentId and r.courseId = o.courseId and r.sectId = o.sectId and ((r.grade \textless\ 2 and o.term = "Fall") or (r.approval = No and o.term="Winter")); \\
+
+c)
+SELECT s.studentId, s.stuName, avg(r.grade) AS gradeAvg \\
+FROM student AS s, register AS r, offering AS o \\
+WHERE s.studentId=r.studentId AND r.courseId=o.courseId AND r.sectId=o.sectId AND o.term="Fall" \\
+GROUP BY s.studentId, s.stuName \\
+HAVING avg(r.grade) \textgreater \ 2.5 \\
+ORDER BY s.stuName; \\
+
+d)
+SELECT p.profName \\
+FROM prof AS p, teach AS t, register AS r \\
+WHERE p.profId = t.profId and t.courseId = r.courseId and t.sectId = r.sectId and r.approval = Yes \\
+GROUP BY p.profName \\
+HAVING count(r.studentId) \textgreater \ 3; \\
+
+e)
+
+f)
+SELECT DISTINCT p.profName \\
+FROM prof AS p \\
+WHERE (((p.profName) Not In (select p.profName \\
+FROM prof AS p, teach AS t, offering AS o, location AS l \\
+WHERE p.profId = t.profId and t.sectid = o.sectId and t.courseId = o.courseId and o.term="Winter" and l.courseId = o.courseId and l.sectId = o.sectId and l.time like "*F*"))) \\
+ORDER BY p.profName; \\
+
+g)(I know this isn't the most efficient way, but I couldn't use that temporary table that a regular sql implementation has)\\
+SELECT s.studentId, s.stuName, r.grade\\
+FROM student AS s, register as r \\
+WHERE r.courseId = "PHY102" and s.studentId = r.studentId and r.grade =(select min(grade) from register  where courseId = "PHY102");\\
+
+h)
+SELECT  o.courseId, o.sectId, count(r.studentId) AS qty\_students \\
+FROM register r right join offering o on r.courseId = o.courseId and r.sectId = o.sectId \\
+GROUP BY o.courseId, o.sectId \\
+ORDER BY o.courseId asc, o.sectId asc; \\
+
+i)
+
+j)
+
+
 
 
 \end{document}
